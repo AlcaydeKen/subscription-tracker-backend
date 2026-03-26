@@ -1,17 +1,17 @@
 # 📅 Subscription Tracker Backend
 
-Subscription Tracker Backend is a Node.js/Express API for managing subscriptions and sending automated email reminders. It integrates MongoDB, Upstash, Nodemailer, and Arcjet to provide a secure, scalable backend system with workflow management, rate limiting, and proper authentication/authorization.
+Subscription Tracker Backend is a **Node.js/Express API** for managing subscriptions and sending automated email reminders. It integrates **MongoDB, Upstash, Nodemailer, and Arcjet** to provide a secure, scalable backend system with workflow management, rate limiting, bot detection and proper authentication/authorization.
 
 ## 🎯 Purpose
 
-This project was developed to provide a backend API for tracking user subscriptions, managing subscription data, sending automated reminders, and handling workflows efficiently. It demonstrates backend best practices, secure API design, database management, and automated workflows with rate limiting.
+This project was developed to provide a backend API for tracking user subscriptions, managing subscription data, sending automated reminders, and handling workflows efficiently. It demonstrates backend best practices, secure API design, database management, and automated workflows with rate limiting and bot detection.
 
 ## 🧠 What I Learned
 - Designing RESTful APIs with Express
 - Connecting and managing MongoDB databases
 - Implementing automated email reminders using Nodemailer
 - Managing workflows and queues with Upstash
-- Securing APIs with rate limiting using Arcjet
+- Securing APIs with rate limiting and bot detection using Arcjet
 - Implementing authentication and role-based authorization
 - Structuring a backend project for scalability and maintainability
 - Error handling and validation in Node.js
@@ -21,18 +21,18 @@ This project was developed to provide a backend API for tracking user subscripti
 - 📆 Track subscription start and expiry dates
 - ✉️ Automated email reminders for upcoming expirations
 - ⚡ Workflow management using Upstash
-- 🛡️ Rate limiting using Arcjet to prevent API abuse
+- 🛡️ Rate limiting and bot detection using Arcjet to prevent API abuse
 - 🔐 Authentication (login/signup) and role-based authorization
 - ✅ Proper access control for admin vs regular users
 
 ## 🛠️ Tech Stack
-- Backend: Node.js, Express
-- Database: MongoDB
-- Email Service: Nodemailer
-- Workflow / Jobs: Upstash
-- Rate Limiting / Security: Arcjet
-- Authentication / Authorization: JWT, middleware
-- Environment Management: dotenv
+- **Backend:** Node.js, Express
+- **Database:** MongoDB
+- **Email Service:** Nodemailer
+- **Workflow / Jobs:** Upstash
+- **Rate Limiting / Security:** Arcjet
+- **Authentication / Authorization:** JWT, middleware
+- **Environment Management:** dotenv
   
 ## 📂 Project Structure
 
@@ -94,7 +94,7 @@ EMAIL_PASSWORD=<your app password>
 
 ### 4️⃣ Run the backend
 ```bash
-npm start
+npm run dev
 ```
 
 ## 🖥️ API Endpoints
