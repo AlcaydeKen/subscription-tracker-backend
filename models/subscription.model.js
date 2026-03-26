@@ -18,10 +18,10 @@ const subscriptionSchema = new mongoose.Schema({
         required: [true, "Currency is required"],
         trim: true,
         uppercase: true,
+        default: 'PHP',
         enum: {
             values: ['PHP', 'USD', 'EUR'],
-            message: 'Please enter a valid currency',
-            default: 'PHP'
+            message: 'Please enter a valid currency'
         }
     },
     frequency: {
