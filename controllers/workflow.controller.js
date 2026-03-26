@@ -23,6 +23,7 @@ export const sendReminders = serve(async (context) => {
     }
 
     for (const daysBefore of REMINDERS) {
+        
         const reminderDate = renewalDate.subtract(daysBefore, "day");
 
         if(reminderDate.isAfter(dayjs())) {
@@ -36,7 +37,7 @@ export const sendReminders = serve(async (context) => {
 });
 
 const fetchSubscription = async (context, subscriptionId) => {
-    return await context.run("get subscription", () => {
+    return await context.run("get subscription", async () => {
         return Subscription.findById(subscriptionId).populate("user", "name email");
     })
 }
