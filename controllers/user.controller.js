@@ -1,4 +1,9 @@
+import mongoose from "mongoose";
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+
 import User from "../models/user.model.js";
+import { JWT_EXPIRES_IN, JWT_SECRET } from "../config/env.js";
 
 export const getUsers = async (req, res, next) => {
     try {
@@ -33,4 +38,103 @@ export const getUser = async (req, res, next) => {
         next(error);
     }
 }
+
+export const createUser = async (req, res, next) => {
+    const session = await mongoose.startSession();
+    session.startTransaction();
+
+    
+    try {
+        const { name, email, password } = req.body;
+
+        const existingUser = await User.findOne({ email });
+
+        if (existingUser) {
+            const error = new Error('User already exists');
+            error.statusCode = 409;
+            throw error;
+        }
+
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(password, salt);
+
+        const newUsers = await User.create([{ name, email, password: hashedPassword }], { session });
+
+        const token = jwt.sign({ userId: newUsers[0]._id }, JWT_SECRET, { expiresIn: JWT_EXPIRES_IN });
+
+        await session.commitTransaction();
+        session.endSession();
+
+        res.status(201).json({ 
+            success: true,
+            message: 'User created successfully',
+            data: {
+                token,
+                user: newUsers[0]
+            }
+         });
+
+    } catch (error) {
+        await session.abortTransaction();
+        session.endSession();
+        next(error);
+    }
+}
+
+export const editUser = async (req, res, next) => {
+    try {
+        const { name, email } = req.body;
+
+        const existingUser = await User.findOne({ email });
+
+        if (existingUser) {
+            const error = new Error("Email already in use");
+            error.statusCode = 409;
+            throw error;
+        }
+
+        const user = await User.findByIdAndUpdate(
+            req.params.id,
+            { name, email },
+            {
+                new: true,
+                runValidators: true
+            }
+        ).select("-password");
+
+        if (!user) {
+            const error = new Error("User not found");
+            error.statusCode = 404;
+            throw error;
+        }
+
+        res.status(200).json({
+            success: true,
+            message: "User updated successfully",
+            data: user
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+
+export const deleteUser = async (req, res, next) => {
+    try {
+        const user = await User.findByIdAndDelete(req.params.id);
+
+        if (!user) {
+            const error = new Error("User not found");
+            error.statusCode = 404;
+            throw error;
+        }
+
+        res.status(200).json({
+            success: true,
+            message: "User deleted successfully"
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+
 
