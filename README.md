@@ -1,4 +1,4 @@
-# 📅 Subscription Tracker Backend
+# 📅 Subscription Tracker Backend API
 
 Subscription Tracker Backend is a **Node.js/Express API** for managing subscriptions and sending automated email reminders. It integrates **MongoDB, Upstash, Nodemailer, and Arcjet** to provide a secure, scalable backend system with workflow management, rate limiting, bot detection and proper authentication/authorization.
 
